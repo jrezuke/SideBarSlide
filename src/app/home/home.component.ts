@@ -15,7 +15,8 @@ import { SideBarVisibilityService } from "app/services/side-bar-visibility.servi
   ]
 })
 export class HomeComponent implements OnInit {
-  state = "show"
+  state = "show";
+  buttonText = "<";
   constructor(private _sbvService: SideBarVisibilityService) { }
 
   ngOnInit() {
@@ -25,12 +26,29 @@ export class HomeComponent implements OnInit {
     });
   }
 
+  onDragStart(event){
+    //event.preventDefault();
+    console.log("onDragStart:", event);
+  }
+
+  onDrop(event){
+    event.preventDefault();
+    console.log("onDrop:", event);
+  }
+
+  allowDrop(event){
+    event.preventDefault();
+    console.log("allowDrop:", event);
+  }
+
   onSideBarToggle(){
     if(this.state === "show"){
       this._sbvService.setState('hide');
+      this.buttonText = ">"
     }
     else{
       this._sbvService.setState('show');
+      this.buttonText = "<";
     }
   }
 }

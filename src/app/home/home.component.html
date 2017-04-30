@@ -1,9 +1,13 @@
 
-  <div [@sideBarVisibility]="state" class="side-bar">
-    side bar
+  <div (drop)="onDrop($event)" (dragover)="allowDrop($event)" [@sideBarVisibility]="state" class="side-bar">
+    <div draggable="true" (dragstart)="onDragStart($event)" class="toggle-bar pull-right">
+      <div class="toggle-bar-top"></div>
+    </div>
+    side bar    
   </div>
-  <div class="home-content">
+
+  <div class="home-content">    
+    <button (click)="onSideBarToggle()">{{buttonText}}</button>
     home content
-    <button (click)="onSideBarToggle()">show/hide</button>
   </div>
 

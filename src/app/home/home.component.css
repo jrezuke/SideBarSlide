@@ -10,7 +10,21 @@
 
 .side-bar{
     width: 200px;
-    min-height: 100%;
-    border-style: solid;
-    border-color: blue;    
+    min-height: 200px;
+    border: 1px solid lightblue;
+    cursor: pointer;
+}
+
+.toggle-bar{
+   width: 6px;    
+   min-height: 200px;
+   border: 1px solid lightblue;
+   
+}
+
+.toggle-bar-top{
+   border-style: solid;
+   border-color: black;
+   height: 20px;
+   cursor: pointer;
 }
