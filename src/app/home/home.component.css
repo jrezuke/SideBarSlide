@@ -12,14 +12,14 @@
     width: 200px;
     min-height: 200px;
     border: 1px solid lightblue;
-    cursor: pointer;
+    
 }
 
 .toggle-bar{
    width: 6px;    
    min-height: 200px;
    border: 1px solid lightblue;
-   
+   cursor: ew-resize;
 }
 
 .toggle-bar-top{

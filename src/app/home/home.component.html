@@ -1,13 +1,19 @@
 
-  <div (drop)="onDrop($event)" (dragover)="allowDrop($event)" [@sideBarVisibility]="state" class="side-bar">
-    <div draggable="true" (dragstart)="onDragStart($event)" class="toggle-bar pull-right">
+  <div  #sbc [@sideBarVisibility]="state" class="side-bar ui-widget-content">
+    <div  #sb class="toggle-bar pull-right">
       <div class="toggle-bar-top"></div>
     </div>
     side bar    
   </div>
 
-  <div class="home-content">    
+  <div #hc class="home-content">    
     <button (click)="onSideBarToggle()">{{buttonText}}</button>
+    <input #input type="text">
     home content
+    <br>width:
+    {{width}}
+    <br>
+    sbLeft:{{sbLeft}}
   </div>
+
 
