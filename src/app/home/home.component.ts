@@ -18,16 +18,18 @@ declare var jQuery: any;
 
 export class HomeComponent implements OnInit, AfterViewInit {
   state = "show";
-  width = 300;
-  //origWidth = 0;
-  //sbLeft = this.width - 8;
+  width = 200;
+  origWidth = 0;
+  sbLeft = this.width - 60;
+  sbRight = 0;
+  offsetLeft = 0;
   buttonText = "<";
   @ViewChild('sb') sb: ElementRef;
   @ViewChild('sbc') sbc: ElementRef;
   @ViewChild('input') input: ElementRef;
 
   constructor(private _sbvService: SideBarVisibilityService,
-    private _cd: ChangeDetectorRef) { }
+    private _cd: ChangeDetectorRef, private elRef:ElementRef) { }
 
   ngOnInit() {
     this._sbvService.state$.subscribe((state) => {      
@@ -40,16 +42,23 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit(){
     let that = this;
-    //this.origWidth = this.width
+    this.origWidth = this.width
+    jQuery(this.elRef.nativeElement).droppable({
+      drop: function( event, ui ) {
+        console.log("drop: ", event, ui);
+        that.width = ui.position.left + 60;
+      }
+    })
     jQuery(this.sb.nativeElement).draggable({
       axis: "x",
-      containment: "parent",
+      //containment: "parent",
       drag: function(event, ui){
-        //console.log("dragging: ", event, ui);
+        console.log("dragging: ", event, ui);
         //console.log("sb right: ", this.style.left);
         //console.log(that.sbc.nativeElement);
         //console.log("ui.position.left", ui.position.left);
-        //that.width = that.origWidth + ui.position.left;
+        //that.width = event.clientX;
+        //that.offsetLeft = ui.offset.left;
         //this._cd.markForCheck();
       }
     });

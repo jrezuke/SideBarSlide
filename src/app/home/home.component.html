@@ -1,9 +1,12 @@
 
-  <div  #sbc [@sideBarVisibility]="state" class="side-bar ui-widget-content">
-    <div  #sb class="toggle-bar pull-right">
+  <div [style.width.px]="width" #sbc [@sideBarVisibility]="state" class="side-bar ui-widget-content">
+    <div class="pull-left">
+      side bar
+    </div>
+    <div [style.left.px]="sbLeft" #sb class="toggle-bar">
       <div class="toggle-bar-top"></div>
     </div>
-    side bar    
+         
   </div>
 
   <div #hc class="home-content">    
@@ -13,7 +16,11 @@
     <br>width:
     {{width}}
     <br>
-    sbLeft:{{sbLeft}}
+    offset left:{{offsetLeft}}
+    <br>
+    sb left:{{sbLeft}}
+    <br>
+    sb right:{{sbRight}}
   </div>
 
 
