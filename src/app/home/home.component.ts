@@ -22,7 +22,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
   origWidth = 0;
   sbLeft = this.width - 60;
   sbRight = 0;
-  offsetLeft = 0;
+  offset = 0;
   buttonText = "<";
   @ViewChild('sb') sb: ElementRef;
   @ViewChild('sbc') sbc: ElementRef;
@@ -40,20 +40,46 @@ export class HomeComponent implements OnInit, AfterViewInit {
 
   }
 
+  onDrop(event, ui){
+    console.log("drop ui.offset.left: ", ui.offset.left);
+    this.width = ui.offset.left;
+    
+  }
+  
   ngAfterViewInit(){
     let that = this;
-    this.origWidth = this.width
-    jQuery(this.elRef.nativeElement).droppable({
-      drop: function( event, ui ) {
-        console.log("drop: ", event, ui);
-        that.width = ui.position.left + 60;
-      }
-    })
+    this.origWidth = this.width;
+       
+
+    jQuery(this.elRef.nativeElement).droppable(
+    //   {
+    //   drop: function( event, ui ) {
+    //     console.log("drop: ", event, ui);
+    //     that.offset = ui.position.left + 60;
+    //     if(that.offset > 60){
+    //       that.width = that.offset;
+    //     }
+    //     // else{
+
+    //     //   that.width = 30;
+    //     //   that.sbLeft = 22;
+    //     // }
+    //   }
+    // }
+    );
+    jQuery(this.elRef.nativeElement).on("drop", this.onDrop);
     jQuery(this.sb.nativeElement).draggable({
       axis: "x",
+      
       //containment: "parent",
       drag: function(event, ui){
-        console.log("dragging: ", event, ui);
+        console.log("dragging ui.position.left: ", ui.offset.left);
+        
+        if(ui.offset.left < 61){
+          ui.position.left = 1;
+          that.onDrop(event, ui);
+        }
+        
         //console.log("sb right: ", this.style.left);
         //console.log(that.sbc.nativeElement);
         //console.log("ui.position.left", ui.position.left);
@@ -64,24 +90,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
     });
     jQuery(this.input.nativeElement).datepicker();
   }
-
-  onDrag(event){
-    //event.preventDefault();
-    console.log("onDragStart:", event);
-
-  }
-
-  onDrop(event){
-    event.preventDefault();
-    console.log("onDrop:", event);
-  }
-
-  allowDrop(event){
-    event.preventDefault();
-    console.log("allowDrop:", event);
-    console.log("allowDrop:", event.dataTransfer);
-  }
-
+  
   onSideBarToggle(){
     if(this.state === "show"){
       this._sbvService.setState('hide');

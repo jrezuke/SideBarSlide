@@ -1,6 +1,6 @@
 
-  <div [style.width.px]="width" #sbc [@sideBarVisibility]="state" class="side-bar ui-widget-content">
-    <div class="pull-left">
+  <div [style.width.px]="width" #sbc [@sideBarVisibility]="state" class="side-bar ui-widget-content ">
+    <div *ngIf="width > 60" class="pull-left">
       side bar
     </div>
     <div [style.left.px]="sbLeft" #sb class="toggle-bar">
@@ -16,7 +16,7 @@
     <br>width:
     {{width}}
     <br>
-    offset left:{{offsetLeft}}
+    offset:{{offset}}
     <br>
     sb left:{{sbLeft}}
     <br>
