@@ -17,7 +17,7 @@
 
 .toggle-bar{
    width: 6px;    
-   min-height: 200px;
+   height: 100%;
    border: 1px solid lightblue;
    cursor: ew-resize;
    display: inline-block;
@@ -25,7 +25,7 @@
 
 .toggle-bar-top{
    border-style: solid;
-   border-color: black;
+   border-color: grey;
    height: 20px;
    cursor: pointer;
 }
