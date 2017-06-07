@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef, AfterViewInit, ChangeDetectorRef } from '@angular/core';
+import { Component, Renderer, OnInit, ViewChild, ElementRef, AfterViewInit, ChangeDetectorRef } from '@angular/core';
 import { trigger, state, animate, transition, style } from '@angular/animations';
 import { SideBarVisibilityService } from "app/services/side-bar-visibility.service";
 declare var jQuery: any;
@@ -6,7 +6,7 @@ declare var jQuery: any;
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css'], 
+  styleUrls: ['./home.component.css'],
   animations:[
     trigger('sideBarVisibility', [
             state('show', style({ opacity: '1', width: '*', display:'block' })),
@@ -29,13 +29,14 @@ export class HomeComponent implements OnInit, AfterViewInit {
   @ViewChild('input') input: ElementRef;
 
   constructor(private _sbvService: SideBarVisibilityService,
-    private _cd: ChangeDetectorRef, private elRef:ElementRef) { }
+    private _cd: ChangeDetectorRef, private elRef:ElementRef,
+    private renderer: Renderer) { }
 
   ngOnInit() {
-    this._sbvService.state$.subscribe((state) => {      
-        this.state = state;  
+    this._sbvService.state$.subscribe((state) => {
+        this.state = state;
         console.log('HomeSideBarComponent.ngOnInit state', this.state);
-                     
+
     });
 
   }
@@ -43,13 +44,13 @@ export class HomeComponent implements OnInit, AfterViewInit {
   onDrop(event, ui){
     console.log("drop ui.offset.left: ", ui.offset.left);
     //this.width = ui.offset.left;
-    
+
   }
-  
+
   ngAfterViewInit(){
     let that = this;
     this.origWidth = this.width;
-       
+
 
     jQuery(this.elRef.nativeElement).droppable(
     {
@@ -77,9 +78,9 @@ export class HomeComponent implements OnInit, AfterViewInit {
     //jQuery(this.elRef.nativeElement).on("drop", this.onDrop);
     jQuery(this.sb.nativeElement).draggable({
       axis: "x",
-      
+
       containment: [60,51,300,251],
-      drag: function(event, ui){        
+      drag: function(event, ui){
         console.log("dragging ui.offset.left: ", ui.offset.left);
         console.log("dragging event.clientX: ", event.clientX);
         console.log("dragging ui.position.left: ", ui.position.left);
@@ -87,7 +88,7 @@ export class HomeComponent implements OnInit, AfterViewInit {
           //ui.position.left = 51;
           //that.onDrop(event, ui);
         }
-        
+
         //console.log("sb right: ", this.style.left);
         //console.log(that.sbc.nativeElement);
         //console.log("ui.position.left", ui.position.left);
@@ -98,11 +99,12 @@ export class HomeComponent implements OnInit, AfterViewInit {
     });
     jQuery(this.input.nativeElement).datepicker();
   }
-  
+
   onSideBarToggle(){
     if(this.state === "show"){
       this._sbvService.setState('hide');
       this.buttonText = ">"
+      this.renderer.setElementStyle(this.sb.nativeElement, "left", "140px");
     }
     else{
       this._sbvService.setState('show');
